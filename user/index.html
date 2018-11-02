@@ -66,12 +66,12 @@
             success: function(info) {
                 $('.name').text(info.username);
                 $('.uname').text(info.username);
-
+                console.log(info);
                 if(info.error) {
                     location.href = '/user/login.html?url=' + location.href;
                 }
             }
-        })
+        });
     
         // 退出登录
         $('.btn_outLogin').on('click',function() {

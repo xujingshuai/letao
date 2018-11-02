@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="../res/fontAwesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="../css/common.css"/>
     <link rel="stylesheet" href="../css/user.css"/>
+    <style>
+        .btn {
+            padding: 0 15px;
+        }
+    </style>
 </head>
 <body>
 <div class="cz_layout bgg">
@@ -20,35 +25,11 @@
         <span class="title">收货地址管理</span>
     </header>
     <div class="cz_container">
-        <ul class="mui-table-view">
-            <li class="mui-table-view-cell">
-                <div class="mui-slider-right mui-disabled">
-                    <a class="mui-btn mui-btn-red">删除</a>
-                </div>
-                <a href="addressManage.html" class="mui-navigate-right mui-slider-handle">
-                    <div class="delivery">邮编：<span>100000</span>&nbsp;收货人：<span>黄晓明</span></div>
-                    <div class="address">北京市海淀区西三旗街道经验龙办公楼传智播客教育科技有限公司</div>
-                </a>
-            </li>
-            <li class="mui-table-view-cell">
-                <div class="mui-slider-right mui-disabled">
-                    <a class="mui-btn mui-btn-red">删除</a>
-                </div>
-                <a href="addressManage.html" class="mui-navigate-right mui-slider-handle">
-                    <div class="delivery">邮编：<span>100000</span>&nbsp;收货人：<span>黄晓明</span></div>
-                    <div class="address">北京市海淀区西三旗街道经验龙办公楼传智播客教育科技有限公司</div>
-                </a>
-            </li>
-            <li class="mui-table-view-cell">
-                <div class="mui-slider-right mui-disabled">
-                    <a class="mui-btn mui-btn-red">删除</a>
-                </div>
-                <a href="addressManage.html" class="mui-navigate-right mui-slider-handle">
-                    <div class="delivery">邮编：<span>100000</span>&nbsp;收货人：<span>黄晓明</span></div>
-                    <div class="address">北京市海淀区西三旗街道经验龙办公楼传智播客教育科技有限公司</div>
-                </a>
-            </li>
+        <ul class="mui-table-view" id="home">
         </ul>
+        <div class="btn">
+            <a href="/user/addAddress.html" class="mui-btn mui-btn-primary btn_login">添加地址</a>
+        </div>
     </div>
     <footer class="cz_tabs">
         <a class="tab_home fa fa-home" href="../index.html"><span>首页</span></a>
@@ -58,5 +39,37 @@
     </footer>
 </div>
 <script src="../res/mui/js/mui.min.js"></script>
+<script src="/assets/jquery.min.js"></script>
+<script src="/assets/template-web.js"></script>
+<script type="text/template" id="tpl">
+    {{each lists as val}}
+        <li class="mui-table-view-cell">
+            <div class="mui-slider-right mui-disabled">
+                <a class="mui-btn mui-btn-red">删除</a>
+            </div>
+            <a href="/user/editAddress.html?id={{val.id}}" class="mui-navigate-right mui-slider-handle">
+                <div class="delivery">邮编：<span>{{val.postCode}}</span>&nbsp;收货人：<span>{{val.recipients
+                    }}</span></div>
+                <div class="address">{{val.address}}{{val.addressDetail}}</div>
+            </a>
+        </li>
+    {{/each}}
+</script>
+<script>
+    $.ajax({
+        url: '/api/address/queryAddress',
+        type: 'get',
+        success: function(info) {
+            // 未登录
+            if(info.error) return location.href = '/user/login.html?url=' + location.href;
+            // console.log(info);
+            
+            // 已登录 使用模板引擎将数据填充到模板中
+            var data = {'lists':info};
+            var str = template('tpl',data);
+            $('#home').html(str);
+        }
+    });
+</script>
 </body>
 </html>
