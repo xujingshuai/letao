@@ -46,6 +46,25 @@
     <script src="../res/mui/js/mui.min.js"></script>
     <script src="../js/jquery.min.js"></script>
     <script>
+
+        // 1. 获取地址参数
+        var search = location.search.slice(1);
+
+        // 2. 使用正则表达式将url的值取出
+        var reg = /url=(.+)/;
+        
+        // 3. 匹配
+        var match = reg.exec(search);
+
+        // if(match) {
+        //     match[1];
+        // } else {
+        //     index.html;
+        // }
+
+        var url = match && match[1];
+        url = url || 'index.html';
+
         // 登录功能
         $('form').on('submit',function() {
             var data = $(this).serialize();
@@ -57,7 +76,7 @@
                 success: function(info) {
                     console.log(info);
                     if(info.success) {
-                        location.href = '../index.html';
+                        location.href = url;
                     }
                 }
             });

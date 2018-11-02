@@ -68,7 +68,7 @@
                 $('.uname').text(info.username);
 
                 if(info.error) {
-                    location.href = '/user/login.html';
+                    location.href = '/user/login.html?url=' + location.href;
                 }
             }
         })
