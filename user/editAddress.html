@@ -52,8 +52,8 @@
         </div>
     </script>
     <script src="../res/mui/js/mui.min.js"></script>
-    <script src="/assets/jquery.min.js"></script>
-    <script src="/assets/template-web.js"></script>
+    <script src="/assets/jquery/jquery.min.js"></script>
+    <script src="/assets/template/template-web.js"></script>
     <script>
         // 首先要根据id将用户某一具体地址取出来
 
@@ -67,17 +67,18 @@
 
         // 将地址参数以 & 拆分成数组
         var arr = id.split('&');
-        console.log(arr);
+        // console.log(arr);
 
         arr.forEach(function(val) {
             // 将每一个单元再以=拆分
             var tmp = val.split('=');
 
             // console.log(tmp);
-            // qs[id] = 2
+            // {id:"1"}
             qs[tmp[0]] = tmp[1]; 
         })
 
+        // console.log(qs);
         // console.log(qs.id);
         
         // 查询所有数据
@@ -100,14 +101,13 @@
                 // console.log(lists);
                 // 调用模板引擎
                 var data = lists[0];
+                console.log(data);
                 var str = template('tpl',data);
                 // 添加 DOM
                 $('form').html(str);
 
             }
         })
-
-
 
 
         // 通过表单进行展示，用户修改后再次提交
@@ -133,6 +133,8 @@
             // 阻止表单默认提交
             return false;
         })
+
+
     </script>
 </body>
 </html>
