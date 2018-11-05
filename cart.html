@@ -108,42 +108,35 @@
         <a class="tab_user fa fa-user" href="user/index.html"><span>会员中心</span></a>
     </footer>
 </div>
-<script src="res/mui/js/mui.min.js"></script>
+<script src="./res/mui/js/mui.min.js"></script>
+<script src="./assets/jquery/jquery.min.js"></script>
+<script src="./assets/template/template-web.js"></script>
 <script>
+
+    $.ajax({
+        url: '/api/cart/queryCart',
+        type: 'get',
+        success: function(info) {
+            // 未登录
+            if(info.error) {
+                mui.alert(
+                    '请登录',
+                    '提示',
+                    '确定',
+                    function() {
+                        location.href = '/user/login.html?url=' + location.href;
+                    }
+                )
+                return;
+            }
+
+            // 
+        }
+    });
+
+
     mui(function(){
-        mui.init();
-        mui('.mui-table-view').on('tap','.mui-btn-red',function() {
-            var btnArray = ['是', '否'];
-            mui.confirm('你要删除这件商品吗？', '温馨提示', btnArray, function(e) {
-                if (e.index == 0) {
-
-                } else {
-
-                }
-            })
-        });
-        mui('.mui-table-view').on('tap','.mui-btn-blue', function(e) {
-            e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
-            var btnArray = ['确定', '取消'];
-            var template = '<input type="number" placeholder="选择数量"/><br>' +
-                    '<input type="text" placeholder="选择尺码" />';
-            mui.confirm(template, '编辑商品', btnArray, function(e) {
-                if (e.index == 0) {
-
-                } else {
-
-                }
-            })
-        });
-        mui('.mui-scroll-wrapper').scroll({
-            scrollY: true, //是否竖向滚动
-            scrollX: false, //是否横向滚动
-            startX: 0, //初始化时滚动至x
-            startY: 0, //初始化时滚动至y
-            indicators: false, //是否显示滚动条
-            deceleration:0.0006, //阻尼系数,系数越小滑动越灵敏
-            bounce: true, //是否启用回弹
-        });
+        mui('.mui-scroll-wrapper').scroll();
     });
 </script>
 </body>
