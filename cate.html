@@ -14,72 +14,135 @@
     <link rel="stylesheet" href="css/cate.css"/>
 </head>
 <body>
-<div class="cz_layout">
-    <header class="cz_topBar">
-        <a href="javascript:history.back();" class="icon_back fa fa-arrow-left"></a>
-        <form action="javascript:;"><input type="search" placeholder=""/></form>
-        <a href="search.html" class="icon_search fa fa-search"></a>
-    </header>
-    <div class="cz_container">
-        <div class="cate_slide">
-            <ul>
-                <li class="now">运动馆</li>
-                <li>女士馆</li>
-                <li>男士馆</li>
-                <li>帆布馆</li>
-                <li>户外馆</li>
-            </ul>
-        </div>
-        <div class="cate_content">
-            <div class="mui-scroll-wrapper">
-                <div>
-                    <span class="title">热门品牌购</span>
-                    <ul class="mui-clearfix">
-                        <li><a href="#"><img src="images/brand1.png" alt=""/><p>耐克</p></a></li>
-                        <li><a href="#"><img src="images/brand2.png" alt=""/><p>耐克</p></a></li>
-                        <li><a href="#"><img src="images/brand3.png" alt=""/><p>耐克</p></a></li>
-                        <li><a href="#"><img src="images/brand4.png" alt=""/><p>耐克</p></a></li>
-                        <li><a href="#"><img src="images/brand5.png" alt=""/><p>耐克</p></a></li>
-                        <li><a href="#"><img src="images/brand6.png" alt=""/><p>耐克</p></a></li>
-                        <li><a href="#"><img src="images/brand7.png" alt=""/><p>耐克</p></a></li>
-                        <li><a href="#"><img src="images/brand8.png" alt=""/><p>耐克</p></a></li>
-                        <li><a href="#"><img src="images/brand1.png" alt=""/><p>耐克</p></a></li>
-                    </ul>
-                    <span class="title">运动休闲</span>
-                    <ul class="mui-clearfix">
-                        <li><a href="#"><img src="images/brand1.png" alt=""/><p>耐克</p></a></li>
-                        <li><a href="#"><img src="images/brand2.png" alt=""/><p>耐克</p></a></li>
-                        <li><a href="#"><img src="images/brand3.png" alt=""/><p>耐克</p></a></li>
-                        <li><a href="#"><img src="images/brand4.png" alt=""/><p>耐克</p></a></li>
-                        <li><a href="#"><img src="images/brand5.png" alt=""/><p>耐克</p></a></li>
-                        <li><a href="#"><img src="images/brand6.png" alt=""/><p>耐克</p></a></li>
-                        <li><a href="#"><img src="images/brand7.png" alt=""/><p>耐克</p></a></li>
-                        <li><a href="#"><img src="images/brand8.png" alt=""/><p>耐克</p></a></li>
-                    </ul>
+    <div class="cz_layout">
+        <header class="cz_topBar">
+            <a href="javascript:history.back();" class="icon_back fa fa-arrow-left"></a>
+            <form action="javascript:;"><input type="search" placeholder=""/></form>
+            <a href="search.html" class="icon_search fa fa-search"></a>
+        </header>
+        <div class="cz_container">
+            <div class="cate_slide" id="topWrap">
+                
+            </div>
+            <div class="cate_content">
+                <div class="mui-scroll-wrapper">
+                    <div>
+                        <span class="title">热门品牌购</span>
+                        <ul class="mui-clearfix">
+                            <li><a href="#"><img src="images/brand1.png" alt=""/><p>耐克</p></a></li>
+                            <li><a href="#"><img src="images/brand2.png" alt=""/><p>耐克</p></a></li>
+                            <li><a href="#"><img src="images/brand3.png" alt=""/><p>耐克</p></a></li>
+                            <li><a href="#"><img src="images/brand4.png" alt=""/><p>耐克</p></a></li>
+                            <li><a href="#"><img src="images/brand5.png" alt=""/><p>耐克</p></a></li>
+                            <li><a href="#"><img src="images/brand6.png" alt=""/><p>耐克</p></a></li>
+                            <li><a href="#"><img src="images/brand7.png" alt=""/><p>耐克</p></a></li>
+                            <li><a href="#"><img src="images/brand8.png" alt=""/><p>耐克</p></a></li>
+                            <li><a href="#"><img src="images/brand1.png" alt=""/><p>耐克</p></a></li>
+                        </ul>
+                        <!-- 子级分类 -->
+                        <div class="childWrap">
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <footer class="cz_tabs">
+            <a class="tab_home fa fa-home" href="index.html"><span>首页</span></a>
+            <a class="tab_cate fa fa-bars now" href="cate.html"><span>分类</span></a>
+            <a class="tab_cart fa fa-shopping-cart" href="cart.html"><span>购物车</span></a>
+            <a class="tab_user fa fa-user" href="user/index.html"><span>会员中心</span></a>
+        </footer>
     </div>
-    <footer class="cz_tabs">
-        <a class="tab_home fa fa-home" href="index.html"><span>首页</span></a>
-        <a class="tab_cate fa fa-bars now" href="cate.html"><span>分类</span></a>
-        <a class="tab_cart fa fa-shopping-cart" href="cart.html"><span>购物车</span></a>
-        <a class="tab_user fa fa-user" href="user/index.html"><span>会员中心</span></a>
-    </footer>
-</div>
-<script src="res/mui/js/mui.min.js"></script>
-<script>
-    mui(function(){
-        mui('.mui-scroll-wrapper').scroll({
-            scrollY: true, //是否竖向滚动
-            scrollX: false, //是否横向滚动
-            startX: 0, //初始化时滚动至x
-            startY: 0, //初始化时滚动至y
-            indicators: false, //是否显示滚动条
-            deceleration:0.0006, //阻尼系数,系数越小滑动越灵敏
-            bounce: true, //是否启用回弹
+    <!-- 定义模板 -->
+    <script type="text/template" id="top">
+        <ul>
+            {{each rows as val}}
+            <li data-id="{{val.id}}">{{val.categoryName}}</li> 
+            {{/each}}       
+        </ul>
+    </script>
+
+    <!-- 模板 -->
+    <script type="text/template" id="child">
+        <span class="title">{{text}}</span>
+        <ul class="mui-clearfix">
+            {{each rows as val}}
+                <li>
+                    <a href="#"><img src="/api{{val.brandLogo}}" alt=""/>
+                        <p>{{val.brandName}}</p>
+                    </a>
+                </li>
+            {{/each}}
+        </ul>
+    </script>
+    <script src="res/mui/js/mui.min.js"></script>
+    <script src="./assets/jquery/jquery.min.js"></script>
+    <script src="./assets/template/template-web.js"></script>
+    <script>
+
+        // 发送ajax请求
+        $.ajax({
+            url: '/api/category/queryTopCategory',
+            type: 'get',
+            success: function (msg) {
+                // console.log(msg);
+                // 调用模板引擎
+                var html = template('top',msg);
+                // 添加DOM
+                $('#topWrap').html(html);
+
+                // 默认触发第一个分类的点击事件
+                $('#topWrap li:first-child').trigger('click');
+            }
         });
-    });
-</script>
+
+
+        // 根据顶级分类的id获取二级分类
+        $('#topWrap').on('click','li',function() {
+            // 获取顶级分类的id
+            var id = $(this).attr('data-id');
+            var text = $(this).text();
+
+            // 改变当前选中分类的状态
+            $(this).addClass('now').siblings().removeClass('now');
+
+
+            $.ajax({
+                url: '/api/category/querySecondCategory',
+                type: 'get',
+                data: {id: id},
+                success: function(msg) {
+                    // console.log(msg);
+
+                    // 顶级分类名称
+                    msg.text = text;
+
+                    // 调用模板引擎
+                    var str = template('child',msg);
+
+                    // 添加DOM
+                    $('.childWrap').html(str);
+
+                }
+            });
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+        // mui插件
+        mui(function(){
+            mui('.mui-scroll-wrapper').scroll();
+        });
+    </script>
 </body>
 </html>
