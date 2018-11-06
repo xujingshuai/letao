@@ -40,7 +40,9 @@
 </div>
 <script src="../res/mui/js/mui.min.js"></script>
 <script src="/assets/jquery/jquery.min.js"></script>
+<!-- 引入模板引擎插件 -->
 <script src="/assets/template/template-web.js"></script>
+<!-- 定义模板 -->
 <script type="text/template" id="tpl">
     {{each lists as val}}
         <li class="mui-table-view-cell">
@@ -48,8 +50,10 @@
                 <a class="mui-btn mui-btn-red">删除</a>
             </div>
             <a href="/user/editAddress.html?id={{val.id}}" class="mui-navigate-right mui-slider-handle">
-                <div class="delivery">邮编：<span>{{val.postCode}}</span>&nbsp;收货人：<span>{{val.recipients
-                    }}</span></div>
+                <div class="delivery">邮编：
+                    <span>{{val.postCode}}</span>&nbsp;
+                    收货人：<span>{{val.recipients}}</span>
+                </div>
                 <div class="address">{{val.address}}{{val.addressDetail}}</div>
             </a>
         </li>
@@ -64,7 +68,7 @@
             if(info.error) return location.href = '/user/login.html?url=' + location.href;
             // console.log(info);
             
-            // 已登录 使用模板引擎将数据填充到模板中
+            // 已登录 使用模板引擎将数据填充到定义好的标签中
             var data = {'lists':info};
             var str = template('tpl',data);
             $('#home').html(str);

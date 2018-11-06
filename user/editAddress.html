@@ -38,8 +38,18 @@
             <div class="mui-input-row">
                 <input name="recipients" type="text" placeholder="收货人" value="{{recipients}}">
             </div>
-            <div class="mui-input-row">
+            <div class="mui-input-row hometown">
+                
                 <input name="address" type="text" placeholder="省/市/县" value="{{address}}">
+                <!-- <select name="" id="p" data-id="">
+                    <option value=""></option>
+                </select>
+                <select name="" id="c" data-id="">
+                    <option value=""></option>
+                </select>
+                <select name="" id="d" data-id="">
+                    <option value=""></option>
+                </select> -->
             </div>
             <div class="mui-input-row">
                 <input name="postcode" type="text" placeholder="邮编" value="{{postCode}}">
@@ -53,7 +63,13 @@
     </script>
     <script src="../res/mui/js/mui.min.js"></script>
     <script src="/assets/jquery/jquery.min.js"></script>
+    <!-- 引入模板引擎插件 -->
     <script src="/assets/template/template-web.js"></script>
+
+    <!-- 引入省市县三级联动 -->
+    <script src="/assets/region/jquery.region.js"></script>
+
+
     <script>
         // 首先要根据id将用户某一具体地址取出来
 
@@ -101,7 +117,7 @@
                 // console.log(lists);
                 // 调用模板引擎
                 var data = lists[0];
-                console.log(data);
+                // console.log(data);
                 var str = template('tpl',data);
                 // 添加 DOM
                 $('form').html(str);
@@ -134,7 +150,10 @@
             return false;
         })
 
-
+        // 调用省市县三级联动
+        $('.hometown').region({
+            url: '/assets/region/region.json'
+        });
     </script>
 </body>
 </html>
