@@ -66,8 +66,8 @@
         url: '/api/cart/queryCart',
         type: 'get',
         success: function(info) {
-            console.log(info);
-            console.log(info[0].pic[0].picAddr);
+            // console.log(info);
+            // console.log(info[0].pic[0].picAddr);
             // 未登录
             if(info.error) {
                 mui.alert(
@@ -83,7 +83,7 @@
 
         
             var data = {'lists':info};
-            console.log(data);
+            // console.log(data);
             // 调用模板引擎
             var html = template('tpl',data);
             // 添加DOM
