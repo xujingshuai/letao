@@ -117,31 +117,12 @@
                                 <th width="10%">编号</th>
                                 <th>品牌名称</th>
                                 <th>品牌logo</th>
-                                <td>商品数量</td>
-                                <th>操作</th>
+                                <!-- <td>商品数量</td>
+                                <th>操作</th> -->
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Nike</td>
-                                <td></td>
-                                <td>8</td>
-                                <td>
-                                    <a href="javascript:;" class="btn btn-info btn-xs">编 辑</a>
-                                    <a href="javascript:;" class="btn btn-warning btn-xs">注 销</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Nike</td>
-                                <td></td>
-                                <td>8</td>
-                                <td>
-                                    <a href="javascript:;" class="btn btn-info btn-xs">编 辑</a>
-                                    <a href="javascript:;" class="btn btn-warning btn-xs">注 销</a>
-                                </td>
-                            </tr>
+                           
                         </tbody>
                     </table>
                 </div>
@@ -151,7 +132,43 @@
 
     <script src="./assets/jquery/jquery.min.js"></script>
     <script src="./assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./assets/art-template/template-web.js"></script>
     <script src="./assets/nprogress/nprogress.js"></script>
     <script src="./js/common.js"></script>
+    <!-- 定义模板 -->
+    <script type="text/template" id="tpl">
+        {{each rows as val key}}
+        <tr>
+            <td>{{key+1}}</td>
+            <td>{{val.brandName}}</td>
+            <!-- <td></td>
+            <td>8</td> -->
+            <td>
+                <a href="javascript:;" class="btn btn-info btn-xs">编 辑</a>
+                <a href="javascript:;" class="btn btn-warning btn-xs">注 销</a>
+            </td>
+        </tr>
+        {{/each}}
+    </script>
+    <script>
+        // 发送请求
+        $.ajax({
+            url: '/api/category/querySecondCategoryPaging',
+            type: 'get',
+            data: {
+                page: 1,
+                pageSize: 100
+            },
+            success: function(msg) {
+                console.log(msg);
+                // 调用模板引擎
+                var html = template('tpl',msg);
+
+                // 添加DOM
+                $('tbody').html(html);
+
+            }
+        });
+    </script>
 </body>
 </html>

@@ -127,15 +127,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>某某某</td>
-                                <td>否</td>
-                                <td>15901256171</td>
-                                <td>
-                                    <a href="javascript:;" class="btn btn-warning btn-xs">禁 用</a>
-                                </td>
-                            </tr>
+                            
                         </tbody>
                     </table>
                 </div>
@@ -147,5 +139,91 @@
     <script src="./assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="./assets/nprogress/nprogress.js"></script>
     <script src="./js/common.js"></script>
+    <script src="./assets/art-template/template-web.js"></script>
+    <!-- 定义模板 -->
+    <script type="text/template" id="tpl">
+        {{each rows as val key}}
+        <tr>
+            <td>{{key+1}}</td>
+            <td>{{val.username}}</td>
+            <td>{{val.mobile}}</td>
+            {{if(val.isDelete == 1)}}
+            <td>否</td>
+            {{else}}
+            <td>是</td>
+            {{/if}}
+            <td data-id="{{val.id}}" data-status="{{val.isDelete}}">
+                {{if(val.isDelete == 1)}}
+                <a href="javascript:;" class="btn btn-warning btn-xs btn_action">禁 用</a>
+                {{else}}
+                <a href="javascript:;" class="btn btn-success btn-xs btn_action">启 用</a>
+                {{/if}}
+            </td>
+        </tr>
+        {{/each}}
+    </script>
+    <script>
+        // 发送请求
+        $.ajax({
+            url: '/api/user/queryUser',
+            type: 'get',
+            data: {
+                page: 1,
+                pageSize: 100
+            },
+            success: function(msg) {
+                console.log(msg);
+
+                if(msg.error) {
+                    return location.href = '/admin/login.html?url=' + location.href;
+                }
+
+                // 调用模板引擎
+                var html = template('tpl',msg);
+                // 添加DOM
+                $('tbody').html(html);
+            }
+        });
+    
+        // 用户操作
+        // 禁用/启用 按钮操作
+        $('tbody').on('click','a.btn_action',function() {
+            // 获取DOM中的参数
+            var td = $(this).parent();
+            var _this = $(this);
+            var id = td.attr('data-id');
+            var status = td.attr('data-status');
+            status = Math.abs(status - 1);
+
+
+
+            // 发送请求
+            $.ajax({
+                url: '/api/user/updateUser',
+                type: 'post',
+                data: {
+                    id: id,
+                    isDelete: status
+                },
+                success: function(msg) {
+                    console.log(msg);
+                    if(msg.success) {
+                        if(status == 1) {
+                            _this.text('禁 用');
+                            td.prev().text('否');
+                        } else {
+                            _this.text('启 用');
+                            td.prev().text('是');
+                        }
+
+                        _this.toggleClass('btn-warning btn-success')
+
+                        // 更新是否禁用的状态
+                        td.attr('data-status',status);
+                    }
+                }
+            });
+        })
+    </script>
 </body>
 </html>

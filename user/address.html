@@ -1,51 +1,53 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <meta content="telephone=no" name="format-detection">
     <title>收货地址管理</title>
     <link type="image/x-icon" rel="shortcut icon" href="../images/favicon.ico">
-    <link rel="stylesheet" href="../res/mui/css/mui.min.css"/>
-    <link rel="stylesheet" href="../res/fontAwesome/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="../css/common.css"/>
-    <link rel="stylesheet" href="../css/user.css"/>
+    <link rel="stylesheet" href="../res/mui/css/mui.min.css" />
+    <link rel="stylesheet" href="../res/fontAwesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/user.css" />
     <style>
         .btn {
             padding: 0 15px;
         }
     </style>
 </head>
+
 <body>
-<div class="cz_layout bgg">
-    <header class="cz_topBar">
-        <a href="javascript:history.back();" class="icon_back fa fa-arrow-left"></a>
-        <span class="title">收货地址管理</span>
-    </header>
-    <div class="cz_container">
-        <ul class="mui-table-view" id="home">
-        </ul>
-        <div class="btn">
-            <a href="/user/addAddress.html" class="mui-btn mui-btn-primary btn_login">添加地址</a>
+    <div class="cz_layout bgg">
+        <header class="cz_topBar">
+            <a href="javascript:history.back();" class="icon_back fa fa-arrow-left"></a>
+            <span class="title">收货地址管理</span>
+        </header>
+        <div class="cz_container">
+            <ul class="mui-table-view" id="home">
+            </ul>
+            <div class="btn">
+                <a href="/user/addAddress.html" class="mui-btn mui-btn-primary btn_login">添加地址</a>
+            </div>
         </div>
+        <footer class="cz_tabs">
+            <a class="tab_home fa fa-home" href="../index.html"><span>首页</span></a>
+            <a class="tab_cate fa fa-bars" href="../cate.html"><span>分类</span></a>
+            <a class="tab_cart fa fa-shopping-cart" href="../cart.html"><span>购物车</span></a>
+            <a class="tab_user fa fa-user" href="../user/index.html"><span>会员中心</span></a>
+        </footer>
     </div>
-    <footer class="cz_tabs">
-        <a class="tab_home fa fa-home" href="../index.html"><span>首页</span></a>
-        <a class="tab_cate fa fa-bars" href="../cate.html"><span>分类</span></a>
-        <a class="tab_cart fa fa-shopping-cart" href="../cart.html"><span>购物车</span></a>
-        <a class="tab_user fa fa-user" href="../user/index.html"><span>会员中心</span></a>
-    </footer>
-</div>
-<script src="../res/mui/js/mui.min.js"></script>
-<script src="/assets/jquery/jquery.min.js"></script>
-<script src="/assets/template/template-web.js"></script>
-<script type="text/template" id="tpl">
+    <script src="../res/mui/js/mui.min.js"></script>
+    <script src="/assets/jquery/jquery.min.js"></script>
+    <script src="/assets/template/template-web.js"></script>
+    <script type="text/template" id="tpl">
     {{each lists as val}}
         <li class="mui-table-view-cell">
             <div class="mui-slider-right mui-disabled">
-                <a class="mui-btn mui-btn-red">删除</a>
+                <a class="mui-btn mui-btn-red btn_delete" data-id="{{val.id}}">删除</a>
             </div>
             <a href="/user/editAddress.html?id={{val.id}}" class="mui-navigate-right mui-slider-handle">
                 <div class="delivery">邮编：<span>{{val.postCode}}</span>&nbsp;收货人：<span>{{val.recipients
@@ -55,21 +57,62 @@
         </li>
     {{/each}}
 </script>
-<script>
-    $.ajax({
-        url: '/api/address/queryAddress',
-        type: 'get',
-        success: function(info) {
-            // 未登录
-            if(info.error) return location.href = '/user/login.html?url=' + location.href;
-            // console.log(info);
-            
-            // 已登录 使用模板引擎将数据填充到模板中
-            var data = {'lists':info};
-            var str = template('tpl',data);
-            $('#home').html(str);
-        }
-    });
-</script>
+    <script>
+        $.ajax({
+            url: '/api/address/queryAddress',
+            type: 'get',
+            success: function (info) {
+                // 未登录
+                if (info.error) return location.href = '/user/login.html?url=' + location.href;
+                // console.log(info);
+
+                // 已登录 使用模板引擎将数据填充到模板中
+                var data = { 'lists': info };
+                var str = template('tpl', data);
+                $('#home').html(str);
+            }
+        });
+
+
+        // 删除地址
+        $('#home').on('click', '.btn_delete', function () {
+            // 获取id
+            var id = $(this).attr('data-id');
+            var _this = $(this);
+
+            // 发送请求
+
+            // 调用mui消息框
+            mui.confirm(
+                '删除后不可恢复',
+                '确定删除',
+                ['是', '否'],
+                function (res) {
+                    if (res.index == 0) {
+                        // 调用接口
+                        $.ajax({
+                            url: '/api/address/deleteAddress',
+                            type: 'post',
+                            data: {id: id},
+                            success: function(msg) {
+                                // console.log(msg);
+                                if(msg.error) {
+                                    return location.href = '/user/login.html?url=' + location.href;
+                                }
+
+                                // 从DOM中删除列表
+                                _this.parents('li').fadeOut(function() {
+                                    $(this).remove();
+                                });
+
+                                // location.href = location.href;
+                            }
+                        });
+                    }
+                });
+        });
+
+    </script>
 </body>
+
 </html>
